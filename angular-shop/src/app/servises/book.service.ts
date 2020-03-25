@@ -9,16 +9,20 @@ import { Book } from '../common/book';
 })
 export class BookService {
 
-  private baseURL = "http://localhost:8080/api/v1/books?size=100";
+  private baseURL = "http://localhost:8080/api/v1/books";
   constructor(private httpClient: HttpClient) { }
-getBooks():Observable<Book[]>{
-  return this.httpClient.get<GetResponceBooks>(this.baseURL).pipe(
+
+
+  getBooks(theCategoryId:number):Observable<Book[]>{
+  const searchUrl = `${this.baseURL}/search/categoryid?id=${theCategoryId}`;
+  return this.httpClient.get<GetResponceBooks>(searchUrl).pipe(
     map(responce=> responce._embedded.books)
   ); 
-}
-}
-interface GetResponceBooks{
-  _embedded:{
-    books: Book[];
   }
 }
+
+  interface GetResponceBooks{
+    _embedded:{
+      books: Book[];
+    }
+  }
