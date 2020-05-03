@@ -18,7 +18,9 @@ public class RpositoryConfig implements RepositoryRestConfigurer {
 		config.exposeIdsFor(entityManager.getMetamodel().getEntities().stream()//get all Etities
 				.map(Type::getJavaType).//by stearm get them java type
 				toArray(Class[]::new)); //and converted to array
-		
-	}
+				config.getCorsRegistry()
+				.addMapping("/**")
+				.allowedOrigins("http://localhost:4200");
 	
+	}	
 }
